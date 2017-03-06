@@ -8,25 +8,25 @@ import { URL_REGISTER_NEW_USER, ADMIN_API_AUTH_KEY_BASE64_ENCODED, URL_LOGIN_USE
 
 const router  = express.Router()
 
-router.post('/signup', (req, res) => {
-    axios({
-        method: 'post',
-        url: URL_REGISTER_NEW_USER,
-        data: req.body.userData,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + ADMIN_API_AUTH_KEY_BASE64_ENCODED
-        }
-    }).then((response) => {
-        let apiResp = response.data // comes back with the entire user object, might want to cache?
-        console.log('Successfully created account for: ', req.body.userData.email, apiResp)
-        res.status(response.status)
-    }).catch((error) => {
-        let apiResp = error.response.data
-        console.log('Oops! Could not create the account for: ', req.body.userData.email, apiResp)
-        res.status(apiResp.status).send({code: apiResp.code, message: apiResp.message, developerMessage: apiResp.developerMessage})
-    })
-})
+// router.post('/signup', (req, res) => {
+//     axios({
+//         method: 'post',
+//         url: URL_REGISTER_NEW_USER,
+//         data: req.body.userData,
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Basic ' + ADMIN_API_AUTH_KEY_BASE64_ENCODED
+//         }
+//     }).then((response) => {
+//         let apiResp = response.data // comes back with the entire user object, might want to cache?
+//         console.log('Successfully created account for: ', req.body.userData.email, apiResp)
+//         res.status(response.status)
+//     }).catch((error) => {
+//         let apiResp = error.response.data
+//         console.log('Oops! Could not create the account for: ', req.body.userData.email, apiResp)
+//         res.status(apiResp.status).send({code: apiResp.code, message: apiResp.message, developerMessage: apiResp.developerMessage})
+//     })
+// })
 
 
 // router.post('/login', (req, res) => {

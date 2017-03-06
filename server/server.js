@@ -13,6 +13,7 @@ import webpackConfig from '../webpack.config'
 
 import apiRoutes from './routes/api-routes'
 
+import { URL_APPLICATION_HREF, ADMIN_ACCOUNT_API_ID, ADMIN_ACCOUNT_API_SECRET } from './lib/stormpath-helpers'
 
 // setx STORMPATH_CLIENT_APIKEY_ID 3QIEZ7NIZZW2ZTSAYG2TT56WL
 // setx STORMPATH_CLIENT_APIKEY_SECRET rQD9KV8AX4gjWk77Xg4cqTTsQ1XhhHBqcKPcx7erYIg
@@ -38,16 +39,19 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use(stormpath.init(app, {
     apiKey: {
-        id: '3QIEZ7NIZZW2ZTSAYG2TT56WL',
-        secret: 'rQD9KV8AX4gjWk77Xg4cqTTsQ1XhhHBqcKPcx7erYIg'
+        id: ADMIN_ACCOUNT_API_ID,
+        secret: ADMIN_ACCOUNT_API_SECRET
+    },
+    application: {
+        href: URL_APPLICATION_HREF
     },
     debug: 'info',
     web: {
-        // produces: ['application/json'], // DO NOT REMOVE. this is to override using SP's templates
-        spa: {
-            enabled: true,
-            view: path.join(__dirname, '../client/index.html')
-        },
+        produces: ['application/json'], // DO NOT REMOVE. this is to override using SP's templates
+        // spa: {
+        //     enabled: true,
+        //     view: path.join(__dirname, '../client/index.html')
+        // },
         // login: {
         //     enabled: true,
         //     uri: '',
@@ -69,7 +73,10 @@ app.use(stormpath.init(app, {
     postLoginHandler: function(account, req, res, next) {
         console.log('User: ', account.email, ' just logged in!')
         res.redirect(302, '/dashboard')
-    }
+    },
+    // postRegistrationHandler: function (account, req, res, next) {
+    //     res.redirect(302, '/')
+    // }
 
 }))
 
@@ -105,6 +112,6 @@ app.listen(port, function () {
         spinner.succeed();
         console.log('\nListening at http://localhost:' + port);
         // Now bring back error logging.
-        app.get('stormpathLogger').transports.console.level = 'error';
+        app.get('stormpathLogger').transports.console.level = 'info';
     });
 });
