@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 export function userSignupRequest(userData) {
     return (dispatch) => {
         return axios.post('/register', {
@@ -8,7 +9,13 @@ export function userSignupRequest(userData) {
             'givenName': userData.givenName,
             'surname': userData.surname
         }).then((response) => {
-            if (response.status >= 200 && response.status < 300) window.location.href = '/'
+            window.location.href = '/'
+        }).catch((error) => {
+            let payload = (error.response) ? error.response.data : 'Oops! Something went wrong. Please try again in sometime.'
+            dispatch({
+                type: 'USER_REGISTRATION_FAILED',
+                payload
+            })
         })
     }
 }

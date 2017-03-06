@@ -9,17 +9,27 @@ class SignupPage extends React.Component {
     }
 
     render() {
-        const { userSignupRequest } = this.props
+        const { userSignupRequest, registration_status } = this.props
         return (
-            <SignupForm userSignupRequest={userSignupRequest}/>
+            <div>
+                <SignupForm userSignupRequest={userSignupRequest} registration_status={registration_status} />
+            </div>
         )
     }
 }
 
 
 SignupForm.propTypes = {
-    userSignupRequest: React.PropTypes.func.isRequired
+    userSignupRequest: React.PropTypes.func.isRequired,
+    registration_status: React.PropTypes.string
 }
 
 
-export default connect((state) => {return {}}, { userSignupRequest })(SignupPage)
+const mapStateToProps = (state) => {
+    return {
+        registration_status: state.signup.registration_status
+    }
+}
+
+
+export default connect(mapStateToProps, { userSignupRequest })(SignupPage)

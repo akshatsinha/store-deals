@@ -7,7 +7,8 @@ export default class SignupForm extends Component {
             email: '',
             password: '',
             givenName: '',
-            surname: ''
+            surname: '',
+            registration_status: null
         }
 
         this.onChange = this.onChange.bind(this)
@@ -28,11 +29,22 @@ export default class SignupForm extends Component {
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="container">
+
                     <div className="row">
                         <div className="col-md-4 col-md-offset-4 text-center">
                             <h1>Sign Up!</h1>
                         </div>
                     </div>
+
+                    {this.props.registration_status &&
+                        <div className="row">
+                            <div className="col-md-4 col-md-offset-4">
+                                <div className="alert alert-danger">
+                                    { this.props.registration_status }
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                     <div className="form-group">
                         <div className="row">
@@ -109,5 +121,6 @@ export default class SignupForm extends Component {
 }
 
 SignupForm.propTypes = {
-    userSignupRequest: React.PropTypes.func.isRequired
+    userSignupRequest: React.PropTypes.func.isRequired,
+    registration_status: React.PropTypes.string
 }

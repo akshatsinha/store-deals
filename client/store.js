@@ -7,8 +7,8 @@ import loginReducer from './reducers/loginReducer'
 
 const store = createStore(
     combineReducers({
-        signupReducer,
-        loginReducer
+        signup: signupReducer,
+        login: loginReducer
     }),
     {},
     applyMiddleware(thunk, logger())
